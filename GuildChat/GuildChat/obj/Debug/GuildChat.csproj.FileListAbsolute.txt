@@ -1,0 +1,12 @@
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\GuildChat.exe.config
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\GuildChat.exe
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\GuildChat.pdb
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.csprojResolveAssemblyReference.cache
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.Properties.Resources.resources
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.csproj.GenerateResource.Cache
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.exe
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.pdb
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\NAudio.dll
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\NAudio.WindowsMediaFormat.dll
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\NAudio.xml
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.GuildChatForm.resources
