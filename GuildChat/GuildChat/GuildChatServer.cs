@@ -7,11 +7,18 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Xml;
 using System.Net;
+using System.IO;
+using System.Xml.Linq;
 
 namespace GuildChat
 {
     /// <summary>
     /// The server class, responsible for presenting list of currently connected users
+    /// 
+    /// Server information is stored in an xml file which should be saved in a publicly acessible area (Dropbox, google drive etc).
+    /// 
+    /// Peer information is also stored in an xml file. This file is returned to users to grant them access to peers. 
+    /// Also, peers can report when other peers appear to be offline and they are removed from the current peers list
     /// </summary>
     public class GuildChatServer
     {
@@ -54,7 +61,7 @@ namespace GuildChat
                 }
                 catch (SocketException se)
                 {
-                    
+
                 }
             }
         }
@@ -115,10 +122,78 @@ namespace GuildChat
             // Lock so only one peer is added at a time
             lock (readlock)
             {
-                
+                // Get ip and port for connection
+                string clientIP = data[1];
+                string clientPort = data[2];
+
+                // Try and open the document, creating it if it doesn't exist
+                if (!File.Exists("peers.xml"))
+                {
+                    CreatePeerXML();
+                }
+
+                XDocument document = XDocument.Load(@"peers.xml");
+                // Add a new peer
+                try
+                {
+                    // The default first port
+                    int assignedPort = 10000;
+                    XElement existingPeer = document.Element("peers").Elements("peer").FirstOrDefault(e => ((string)e.Element("ip") == clientIP));
+                    if (existingPeer == null)
+                    {
+                        // Not in list, assign new port number
+                        XElement lastPort = document.Element("peers").Elements("peer").LastOrDefault(e => ((string)e.Element("port") != null));
+
+                        // If the list isn't empty, assign to a port 2 greater than the last element
+                        if (lastPort != null)
+                        {
+                            assignedPort = int.Parse(lastPort.Value) + 2;
+                        }
+                        // Peers.xml totally empty, add a new peer element
+                        else 
+                        {
+                             // Add to peers.xml
+                            XElement newPeer = new XElement("peer",
+                                                new XElement("ip", clientIP),
+                                                new XElement("port", assignedPort));
+                            document.Element("peers").Add(newPeer);
+                            document.Save(@"peers.xml");
+                        }
+                    }
+                    else
+                    {
+                        // In list, get old number
+                        assignedPort = int.Parse(existingPeer.Element("port").Value);
+                    }
+
+                   
+
+                    SendResponse(client, Requests.CreateOKAddMsg(assignedPort));
+                }
+                catch (Exception exc)
+                {
+                    // Something bad happened, let the client know
+                    SendResponse(client, Requests.CreateNOMsg());
+                }
+
             }
 
             // Send the file to the peer
+        }
+
+        /* Creates the peer XML file */
+        private void CreatePeerXML()
+        {
+            XmlTextWriter writer = new XmlTextWriter("peers.xml", null);
+            // Write the intro
+            writer.WriteStartDocument();
+            writer.WriteComment("Current peer list");
+            writer.WriteStartElement("peers");
+
+            // Close up
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Close();
         }
 
         /* Retrieve the current peer list */
@@ -134,6 +209,13 @@ namespace GuildChat
         private void RemovePeer(TcpClient client, String[] data)
         {
 
+        }
+
+        /* Send a response to the client */
+        private void SendResponse(TcpClient client, String response)
+        {
+            byte[] responseBuffer = Requests.Serialize(response);
+            client.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
         }
 
         /// <summary>
@@ -169,6 +251,18 @@ namespace GuildChat
             public static String CreateRemoveMsg(String ip, int port)
             {
                 return "REMOVE|" + ip + "|" + port;
+            }
+
+            //Returns the OK message
+            public static String CreateOKAddMsg(int port)
+            {
+                return "OK|" + port;
+            }
+
+            //Returns the NO message
+            public static String CreateNOMsg()
+            {
+                return "NO";
             }
         }
     }

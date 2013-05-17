@@ -10,3 +10,4 @@ C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\N
 C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\NAudio.WindowsMediaFormat.dll
 C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\bin\Debug\NAudio.xml
 C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildChat\GuildChat\obj\Debug\GuildChat.GuildChatForm.resources
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChat\obj\Debug\GuildChat.CreateServerForm.resources

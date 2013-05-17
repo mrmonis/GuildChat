@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateServerForm.Designer.cs">
+      <DependentUpon>CreateServerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GuildChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +65,9 @@
     <Compile Include="GuildChatServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CreateServerForm.resx">
+      <DependentUpon>CreateServerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GuildChatForm.resx">
       <DependentUpon>GuildChatForm.cs</DependentUpon>
     </EmbeddedResource>

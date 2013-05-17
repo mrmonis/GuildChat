@@ -68,12 +68,6 @@ namespace GuildChat
             waveIn = null;
         }
 
-        /* Starts a local server */
-        private void startServerButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             server = new GuildChatServer(IPAddress.Loopback, 9000);
@@ -117,6 +111,8 @@ namespace GuildChat
             {
                 TcpClient client = new TcpClient(address, port);
 
+                setStatusText("Connected on " + client.Client.RemoteEndPoint);
+
                 // Ask to be added to the peer list
                 byte[] addRequest = GuildChatServer.Requests.Serialize(GuildChatServer.Requests.CreateAddMsg(address, port));
                 NetworkStream stream = client.GetStream();
@@ -125,14 +121,48 @@ namespace GuildChat
                 // Grab the response
                 byte[] buffer = new byte[256];
                 int received = 0;
+                received = stream.Read(buffer,0, buffer.Length);
+                //while (received > 0) 
+                //{
+                //    string response = GuildChatServer.Requests.Deserialize(buffer);
+                //    setStatusText(response);
+                //}
+                
 
             }
             catch (Exception exc)
             {
-
+                setStatusText("Connection error: " + exc.Message);
             }
 
         }
 
+        /* Sets up a server file at the specified location */
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Create the server creation form as a dialog
+                CreateServerForm form = new CreateServerForm();
+                form.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+            }
+        }
+
+        /* Sets whether menu items are clickable or not based on the server */
+        public void hasServer(bool serverCreated)
+        {
+            manageToolStripMenuItem.Enabled = serverCreated;
+            startToolStripMenuItem.Enabled = serverCreated;
+            stopToolStripMenuItem.Enabled = serverCreated;
+        }
+
+        /* Adds a line to the status text box */
+        public void setStatusText(String msg)
+        {
+            statusTextBox.Text += msg + "\r\n";
+        }
     }
 }
