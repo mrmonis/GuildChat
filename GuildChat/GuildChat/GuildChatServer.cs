@@ -59,7 +59,7 @@ namespace GuildChat
                     Thread t = new Thread(paramStart);
                     t.Start(client);
                 }
-                catch (SocketException se)
+                catch (Exception exc)
                 {
 
                 }
@@ -138,27 +138,29 @@ namespace GuildChat
                 {
                     // The default first port
                     int assignedPort = 10000;
+
+                    // Check if the client is in file already
                     XElement existingPeer = document.Element("peers").Elements("peer").FirstOrDefault(e => ((string)e.Element("ip") == clientIP));
+
+                    // Client not in file, pick a new port number and assign
                     if (existingPeer == null)
                     {
-                        // Not in list, assign new port number
+                        // Attempt to get last port, returning null if peer list is empty
                         XElement lastPort = document.Element("peers").Elements("peer").LastOrDefault(e => ((string)e.Element("port") != null));
 
                         // If the list isn't empty, assign to a port 2 greater than the last element
                         if (lastPort != null)
                         {
-                            assignedPort = int.Parse(lastPort.Value) + 2;
+                            assignedPort = int.Parse(lastPort.Element("port").Value) + 2;
                         }
-                        // Peers.xml totally empty, add a new peer element
-                        else 
-                        {
-                             // Add to peers.xml
-                            XElement newPeer = new XElement("peer",
-                                                new XElement("ip", clientIP),
-                                                new XElement("port", assignedPort));
-                            document.Element("peers").Add(newPeer);
-                            document.Save(@"peers.xml");
-                        }
+
+                        // Port chosen, add new peer
+                        XElement newPeer = new XElement("peer",
+                                            new XElement("ip", clientIP),
+                                            new XElement("port", assignedPort));
+                        document.Element("peers").Add(newPeer);
+                        document.Save(@"peers.xml");
+
                     }
                     else
                     {
@@ -166,9 +168,9 @@ namespace GuildChat
                         assignedPort = int.Parse(existingPeer.Element("port").Value);
                     }
 
-                   
+
                     // Everything is good, send OK message
-                    SendResponse(client, Requests.CreateOKAddMsg(assignedPort));
+                    SendResponse(client, Requests.CreateOKAddMsg(clientIP, assignedPort));
                 }
                 catch (Exception exc)
                 {
@@ -265,9 +267,9 @@ namespace GuildChat
             }
 
             // Returns the OK message for adding
-            public static String CreateOKAddMsg(int port)
+            public static String CreateOKAddMsg(String ip, int port)
             {
-                return "OK|" + port;
+                return "OK|" + ip + "|" + port;
             }
 
             // Returns the OK message for getting

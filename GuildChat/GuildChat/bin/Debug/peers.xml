@@ -5,4 +5,12 @@
     <ip>127.0.0.1</ip>
     <port>9998</port>
   </peer>
+  <peer>
+    <ip>192.168.2.10</ip>
+    <port>10000</port>
+  </peer>
+  <peer>
+    <ip>192.168.2.20</ip>
+    <port>10002</port>
+  </peer>
 </peers>
