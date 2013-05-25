@@ -56,6 +56,7 @@
     <Compile Include="CreateServerForm.Designer.cs">
       <DependentUpon>CreateServerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GuildChatClient.cs" />
     <Compile Include="GuildChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,8 +64,10 @@
       <DependentUpon>GuildChatForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GuildChatServer.cs" />
+    <Compile Include="Peer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerXmlManager.cs" />
     <EmbeddedResource Include="CreateServerForm.resx">
       <DependentUpon>CreateServerForm.cs</DependentUpon>
     </EmbeddedResource>

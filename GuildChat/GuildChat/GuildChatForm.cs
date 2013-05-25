@@ -17,8 +17,8 @@ namespace GuildChat
 {
     public partial class GuildChatForm : Form
     {
-        protected string address;
-        protected int port;
+        // The client
+        protected GuildChatClient client;
 
         // Server is only used if hosting
         protected GuildChatServer server;
@@ -75,60 +75,31 @@ namespace GuildChat
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            server.StopServer();
-            server = null;
+            if (server != null)
+            {
+                server.StopServer();
+                server = null;
+            }
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                using (BufferedStream stream = new BufferedStream(dialog.OpenFile()))
-                {
-                    XmlTextReader reader = new XmlTextReader(stream);
+            Peer server = ServerXmlManager.SelectServerFile();
 
-                    // Read the elements
-                    while (reader.Read())
-                    {
-                        if (reader.NodeType == XmlNodeType.Element)
-                        {
-                            if (reader.Name == "ip")
-                            {
-                                address = reader.ReadElementContentAsString();
-                            }
-                            if (reader.Name == "port")
-                            {
-                                port = reader.ReadElementContentAsInt();
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Attempt to connect to the server
+            // Create a new client and attempt a connection to the server
             try
             {
-                TcpClient client = new TcpClient(address, port);
-
-                setStatusText("Connected on " + client.Client.RemoteEndPoint);
-
-                // Ask to be added to the peer list
-                byte[] addRequest = GuildChatServer.Requests.Serialize(GuildChatServer.Requests.CreateAddMsg(address, port));
-                NetworkStream stream = client.GetStream();
-                stream.Write(addRequest, 0, addRequest.Length);
-
-                // Grab the response
-                byte[] buffer = new byte[256];
-                int received = 0;
-                received = stream.Read(buffer,0, buffer.Length);
-                //while (received > 0) 
-                //{
-                //    string response = GuildChatServer.Requests.Deserialize(buffer);
-                //    setStatusText(response);
-                //}
+                client = new GuildChatClient(server);
                 
-
+                // Checks if the client was added successfully
+                if (client.AddClient())
+                {
+                    client.GetPeers();
+                }
+                else
+                {
+                    setStatusText("Adding to peers failed\r\n");
+                }
             }
             catch (Exception exc)
             {

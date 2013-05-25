@@ -68,7 +68,7 @@
             // 
             this.AudioControlPanel.Controls.Add(this.startButton);
             this.AudioControlPanel.Controls.Add(this.stopButton);
-            this.AudioControlPanel.Location = new System.Drawing.Point(12, 264);
+            this.AudioControlPanel.Location = new System.Drawing.Point(12, 500);
             this.AudioControlPanel.Name = "AudioControlPanel";
             this.AudioControlPanel.Size = new System.Drawing.Size(175, 31);
             this.AudioControlPanel.TabIndex = 5;
@@ -76,11 +76,11 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.serverToolStripMenuItem,
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.serverToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(459, 24);
+            this.menuStrip.Size = new System.Drawing.Size(450, 24);
             this.menuStrip.TabIndex = 7;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -98,7 +98,7 @@
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.createToolStripMenuItem.Text = "Create";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
@@ -106,7 +106,7 @@
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
             this.startToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
@@ -114,7 +114,7 @@
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
             this.stopToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -122,7 +122,7 @@
             // 
             this.manageToolStripMenuItem.Enabled = false;
             this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
-            this.manageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.manageToolStripMenuItem.Text = "Manage";
             // 
             // fileToolStripMenuItem
@@ -147,14 +147,14 @@
             this.statusTextBox.Multiline = true;
             this.statusTextBox.Name = "statusTextBox";
             this.statusTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.statusTextBox.Size = new System.Drawing.Size(425, 230);
+            this.statusTextBox.Size = new System.Drawing.Size(425, 194);
             this.statusTextBox.TabIndex = 8;
             // 
             // GuildChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 307);
+            this.ClientSize = new System.Drawing.Size(450, 543);
             this.Controls.Add(this.statusTextBox);
             this.Controls.Add(this.AudioControlPanel);
             this.Controls.Add(this.menuStrip);

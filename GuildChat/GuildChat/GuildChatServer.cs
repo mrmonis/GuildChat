@@ -167,7 +167,7 @@ namespace GuildChat
                     }
 
                    
-
+                    // Everything is good, send OK message
                     SendResponse(client, Requests.CreateOKAddMsg(assignedPort));
                 }
                 catch (Exception exc)
@@ -201,7 +201,18 @@ namespace GuildChat
         {
             lock (readlock)
             {
-                client.Client.SendFile("peers.xml");
+                SendResponse(client, Requests.CreateOKGetMsg((new FileInfo("peers.xml")).Length));
+
+                // Read the peers and send them back one at a time
+                try
+                {
+                    client.Client.SendFile("peers.xml");
+                }
+                catch (Exception exc)
+                {
+                    // Something bad happened, let the client know
+                    SendResponse(client, Requests.CreateNOMsg());
+                }
             }
         }
 
@@ -253,13 +264,19 @@ namespace GuildChat
                 return "REMOVE|" + ip + "|" + port;
             }
 
-            //Returns the OK message
+            // Returns the OK message for adding
             public static String CreateOKAddMsg(int port)
             {
                 return "OK|" + port;
             }
 
-            //Returns the NO message
+            // Returns the OK message for getting
+            public static String CreateOKGetMsg(long filesize)
+            {
+                return "OK|" + filesize;
+            }
+
+            // Returns the NO message
             public static String CreateNOMsg()
             {
                 return "NO";
