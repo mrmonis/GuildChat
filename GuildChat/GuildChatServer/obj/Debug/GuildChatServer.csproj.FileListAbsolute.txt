@@ -1,0 +1,9 @@
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\bin\Debug\GuildChatServer.exe.config
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.csprojResolveAssemblyReference.cache
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.Properties.Resources.resources
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.csproj.GenerateResource.Cache
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\bin\Debug\GuildChatServer.exe
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\bin\Debug\GuildChatServer.pdb
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.exe
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.pdb
+C:\Users\Benjamin\Documents\Guild Chat\GuildChat\GuildCHat\GuildChatServer\obj\Debug\GuildChatServer.ManageServerForm.resources

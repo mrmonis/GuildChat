@@ -9,8 +9,10 @@ using System.Xml;
 using System.Net;
 using System.IO;
 using System.Xml.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
-namespace GuildChat
+namespace GuildChatServer
 {
     /// <summary>
     /// The server class, responsible for presenting list of currently connected users
@@ -22,32 +24,65 @@ namespace GuildChat
     /// </summary>
     public class GuildChatServer
     {
-        protected int port;
-        protected IPAddress ip;
+        // The info of the server
+        ServerData serverInfo;
+
         protected Thread serverThread;
         protected TcpListener listener;
         private readonly object readlock = new object();
 
-        public GuildChatServer(IPAddress ip, int port)
+        public GuildChatServer()
         {
-            // Start a thread that listens for requests
-            this.ip = ip;
-            this.port = port;
+            serverInfo = new ServerData();
+            LoadServerData("server.dat");
+        }
 
-            ThreadStart start = new ThreadStart(StartServer);
-            serverThread = new Thread(start);
-            serverThread.Start();
+        /* Loads the data from memory, creating defaults if the file isn't found */
+        private void LoadServerData(String filepath)
+        {
+            try
+            {
+                // Check for existence
+                if (File.Exists(filepath))
+                {
+                    using (FileStream fs = new FileStream(filepath, FileMode.Open))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ServerData));
+                        serverInfo = (ServerData)serializer.Deserialize(fs);
+                    }
+                }
+                else
+                {
+                    // Create a new server file
+                    MessageBox.Show("Could not find configuration file\r\nCreating default file","Config Not Found");
+                    using (FileStream fileStream= new FileStream(filepath, FileMode.CreateNew))
+                    using (TextWriter textWriter = new StreamWriter(fileStream))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ServerData));
+                        serverInfo = new ServerData(IPAddress.Any.ToString(), 9000);
+                        serializer.Serialize(textWriter, serverInfo);
+                    }
+                }
+
+                ThreadStart start = new ThreadStart(StartServer);
+                serverThread = new Thread(start);
+                serverThread.Start();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         /* Starts the server thread, opening the listening port */
         public void StartServer()
         {
             // Start listening to connections
-            listener = new TcpListener(ip, port);
+            listener = new TcpListener(IPAddress.Parse(serverInfo.IP), serverInfo.Port);
             listener.Start();
 
             // Loop forever
-            while (true)
+            while (listener.Server.IsBound)
             {
                 // Need to know when server was interrupted
                 try
@@ -82,6 +117,7 @@ namespace GuildChat
             }
             finally
             {
+                serverThread.Abort();
                 serverThread = null;
             }
         }
